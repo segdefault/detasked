@@ -15,7 +15,7 @@ export default function KanbanColumn(props: KanbanColumnProps) {
 	const { column, ...divProps } = props;
 
 	const className: KanbanColumnProps["className"] =
-		`flex flex-col rounded-xl bg-slate-300 dark:bg-slate-700 ` +
+		`flex flex-col ` +
 		`${divProps.className ?? ""}`;
 
 	return (
@@ -27,7 +27,7 @@ export default function KanbanColumn(props: KanbanColumnProps) {
 				column={column}
 				className="p-4"
 			/>
-			<div className="overflow-scroll">
+			<div className="flex-1 overflow-scroll rounded-b-xl bg-slate-300 dark:bg-slate-700">
 				<div className="flex flex-col p-3 gap-4">
 					{column.notes.map(note => (
 						<KanbanNote
