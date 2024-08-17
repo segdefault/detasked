@@ -7,8 +7,10 @@ export default async function BoardPage(props: {
 	params: { boardId: string };
 }) {
 	const boardId = props.params.boardId;
-	const board = await getBoardSa(props.params.boardId);
-	const boardState = board ? { boardId, ...board } : null;
+	const boardResponse = await getBoardSa(props.params.boardId);
+	const board =
+		boardResponse.status == "success" ? boardResponse.content : undefined;
+	const boardState = board ? { boardId, modified: false, ...board } : null;
 
 	return (
 		<BoardProvider initialValue={boardState}>

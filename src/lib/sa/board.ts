@@ -1,14 +1,54 @@
 "use server";
 
 import boardKv from "../kv/board";
-import { BoardIdSchema } from "../schemas/board";
+import BoardSchema, { BoardIdSchema, BoardSchemaError } from "../schemas/board";
+import { ServerActionResult } from "./types";
 
-export async function getBoardSa(boardId: string) {
-	const { success: validId } = BoardIdSchema.safeParse(boardId);
+const isProduction = process.env.NODE_ENV == "production";
+
+export async function getBoardSa(
+	boardId: string,
+): Promise<ServerActionResult<BoardSchemaError, BoardSchema>> {
+	const { success: validId, error } = BoardIdSchema.safeParse(boardId);
 
 	if (!validId) {
-		return null;
+		return {
+			status: "error",
+			error: isProduction
+				? BoardSchemaError.UNK
+				: (error as unknown as BoardSchemaError),
+		};
 	}
 
-	return await boardKv.get(boardId);
+	const board = await boardKv.get(boardId);
+
+	return {
+		status: "success",
+		content: board,
+	};
+}
+
+export async function updateBoardSa(
+	boardId: string,
+	board: BoardSchema,
+): Promise<ServerActionResult<BoardSchemaError>> {
+	const { success: validId, error: idError } = BoardIdSchema.safeParse(boardId);
+	const { success: validBoard, error: boardError } =
+		BoardSchema.safeParse(board);
+
+	if (!validId) {
+		return {
+			status: "error",
+			error: idError.message as unknown as BoardSchemaError,
+		};
+	} else if (!validBoard) {
+		return {
+			status: "error",
+			error: boardError.message as unknown as BoardSchemaError,
+		};
+	}
+
+	await boardKv.update(boardId, board);
+
+	return { status: "success" };
 }

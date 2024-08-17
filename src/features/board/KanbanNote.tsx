@@ -1,5 +1,17 @@
 "use client";
 
+import React from "react";
+
+import {
+	DeleteFilled,
+	PicCenterOutlined,
+	SwapOutlined,
+} from "@ant-design/icons";
+import { SyntheticListenerMap } from "@dnd-kit/core/dist/hooks/utilities";
+import { SortableData as DnDSortableData } from "@dnd-kit/sortable";
+import { Button } from "@nextui-org/react";
+
+import TogglableTextarea from "@/components/TogglableTextarea";
 import { gochiHand } from "@/lib/fonts";
 import { type NoteSchema } from "@/lib/schemas/board";
 
@@ -8,21 +20,79 @@ export type KanbanNoteProps = Omit<
 	"children"
 > & {
 	note: NoteSchema;
+	onNoteDelete?: () => void;
+	onNoteEdit?: (note: NoteSchema) => void;
+	displayRepresentation?: boolean;
+	moveNoteListeners?: SyntheticListenerMap;
 };
 
-export default function KanbanNote(props: KanbanNoteProps) {
-	const { note, ...divProps } = props;
+export type SortableData = DnDSortableData & {
+	note: NoteSchema;
+};
 
-	const className: KanbanNoteProps["className"] =
-		`bg-slate-100 dark:bg-slate-600 rounded-xl text-center content-center ` +
-		`${gochiHand.className} ${divProps.className ?? ""}`;
+const KanbanNote = React.forwardRef<HTMLDivElement, KanbanNoteProps>(
+	(props, ref) => {
+		const {
+			note,
+			displayRepresentation,
+			onNoteEdit,
+			onNoteDelete,
+			moveNoteListeners,
+			...divProps
+		} = props;
 
-	return (
-		<div
-			{...divProps}
-			className={className}
-		>
-			<p>{note.content}</p>
-		</div>
-	);
-}
+		const [editable, setEditable] = React.useState(false);
+
+		const className: KanbanNoteProps["className"] =
+			`relative rounded-xl text-center content-center group p-2` +
+			` ${displayRepresentation ? "outline outline-primary outline-dashed" : "bg-slate-100 dark:bg-slate-600"}` +
+			` ${editable ? "outline outline-primary" : ""}` +
+			` ${gochiHand.className} ${divProps.className ?? ""}`;
+
+		const onContentModified = (content: string) =>
+			onNoteEdit?.({ ...note, content });
+
+		return (
+			<div
+				{...divProps}
+				className={className}
+				ref={ref}
+			>
+				{displayRepresentation && <SwapOutlined />}
+				{!displayRepresentation && (
+					<>
+						<TogglableTextarea
+							value={note.content}
+							className="min-h-0 h-fit w-full bg-transparent resize-none outline-none text-center align-middle "
+							rows={4}
+							onCommit={onContentModified}
+							onToggle={setEditable}
+						/>
+						<Button
+							variant="light"
+							className="absolute bottom-0 end-0 text-foreground/0 group-hover:text-foreground/100 m-1"
+							onClick={onNoteDelete}
+							isIconOnly
+						>
+							<DeleteFilled />
+						</Button>
+						<div
+							className={
+								"absolute bottom-0 start-0 inline-flex items-center justify-center " +
+								"box-border subpixel-antialiased rounded-medium px-0 m-1 " +
+								"bg-transparent hover:bg-default/40 min-w-10 w-10 h-10 " +
+								"text-foreground/0 group-hover:text-foreground/100 "
+							}
+							{...moveNoteListeners}
+						>
+							<PicCenterOutlined />
+						</div>
+					</>
+				)}
+			</div>
+		);
+	},
+);
+KanbanNote.displayName = "KanbanNote";
+
+export default KanbanNote;

@@ -1,6 +1,11 @@
-import { type BoardSchema } from "../schemas/board";
+import { type BoardSchema, type NoteSchema } from "../schemas/board";
 
-const defaultBoard: BoardSchema = {
+export const genDefaultNote = () => ({
+	uuid: crypto.randomUUID(),
+	content: "New note",
+} as NoteSchema);
+
+export const defaultBoard: BoardSchema = {
 	title: "New Board",
 	columns: [
 		{

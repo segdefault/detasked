@@ -8,7 +8,9 @@ import GenericMutableProvider, {
 } from "@/components/GenericMutableProvider";
 import type BoardSchema from "@/lib/schemas/board";
 
-export type BoardState = (BoardSchema & { boardId: string }) | null;
+export type BoardState =
+	| (BoardSchema & { boardId: string; modified: boolean })
+	| null;
 export type BoardProviderProps = Omit<
 	GenericMutableProviderProps<BoardState>,
 	"context"

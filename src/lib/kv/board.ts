@@ -19,6 +19,11 @@ const boardKv = {
 
 		return (await kv().hgetall(key)) as BoardSchema;
 	},
+	update: async (boardId: string, board: BoardSchema) => {
+		const key = buildBoardKey(boardId);
+
+		return await kv().hset(key, board);
+	},
 };
 
 export default boardKv;
