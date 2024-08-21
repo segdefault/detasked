@@ -40,6 +40,7 @@ const AddNoteButton = (props: { onClick?: () => void }) => (
 
 const dummyNote = (
 	<KanbanNote
+		key={"dummy"}
 		note={genDefaultNote()}
 		displayRepresentation={true}
 		className="h-32 outline-secondary"
@@ -84,7 +85,7 @@ export default function KanbanColumn(props: KanbanColumnProps) {
 							over?.id === note.uuid && !draggableOwner ? (
 								<>
 									{dummyNote}
-									<AddNoteButton />
+									<AddNoteButton key={"dummy-add"} />
 								</>
 							) : null,
 							<SortableKanbanNote
