@@ -49,8 +49,11 @@ const KanbanNote = React.forwardRef<HTMLDivElement, KanbanNoteProps>(
 			` ${editable ? "outline outline-primary" : ""}` +
 			` ${gochiHand.className} ${divProps.className ?? ""}`;
 
-		const onContentModified = (content: string) =>
-			onNoteEdit?.({ ...note, content });
+		const onContentModified = (content: string) => {
+			const contentChanged = content !== note.content;
+
+			return contentChanged && onNoteEdit?.({ ...note, content });
+		};
 
 		return (
 			<div
