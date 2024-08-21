@@ -36,8 +36,14 @@ export default async function rootRedirectMiddleware(
 
 	const url = `/board/${bookmarkId}`;
 
-	return NextResponse.redirect(new URL(url, request.url), {
+	const newResponse = NextResponse.redirect(new URL(url, request.url), {
 		...response,
 		status: 303,
 	});
+
+	response.cookies.getAll().forEach(cookie => {
+		newResponse.cookies.set(cookie);
+	});
+
+	return newResponse;
 }
