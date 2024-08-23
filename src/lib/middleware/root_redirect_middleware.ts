@@ -3,6 +3,7 @@ import { NextResponse, type NextRequest } from "next/server";
 import boardKv from "../kv/board";
 import userKv from "../kv/user";
 import defaultBoard from "../misc/default_board";
+import { buildBoardPageUrl } from "../paths";
 import { getSessionId } from "./session_middleware";
 
 // Runs when no board was specified to access
@@ -34,7 +35,7 @@ export default async function rootRedirectMiddleware(
 		bookmarkId = bookmarkIds[0];
 	}
 
-	const url = `/board/${bookmarkId}`;
+	const url = buildBoardPageUrl(bookmarkId);
 
 	const newResponse = NextResponse.redirect(new URL(url, request.url), {
 		...response,

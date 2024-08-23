@@ -30,11 +30,11 @@ export async function getBoardSa(
 
 export async function updateBoardSa(
 	boardId: string,
-	board: BoardSchema,
+	board: Partial<BoardSchema>,
 ): Promise<ServerActionResult<BoardSchemaError>> {
 	const { success: validId, error: idError } = BoardIdSchema.safeParse(boardId);
 	const { success: validBoard, error: boardError } =
-		BoardSchema.safeParse(board);
+		BoardSchema.partial().safeParse(board);
 
 	if (!validId) {
 		return {

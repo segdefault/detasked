@@ -41,8 +41,14 @@ export const BoardIdSchema = z
 		BoardSchemaError.INVALID_BOARD,
 	);
 
+export const BOARD_ITEM_KEYS: (keyof BoardItemSchema)[] = ["title"];
+export const BoardItemSchema = BoardSchema.pick({ title: true }).extend({
+	id: BoardIdSchema,
+});
+
 export type NoteSchema = z.infer<typeof NoteSchema>;
 export type ColumnSchema = z.infer<typeof ColumnSchema>;
 export type BoardSchema = z.infer<typeof BoardSchema>;
+export type BoardItemSchema = z.infer<typeof BoardItemSchema>;
 
 export default BoardSchema;

@@ -1,5 +1,5 @@
 import kv from ".";
-import { type UserSchema } from "../schemas/user";
+import { PRIVATE_KEY_LEN, type UserSchema } from "../schemas/user";
 import generateString from "../utils/generate_string";
 import hash from "../utils/hash";
 import generateKvKey from "./generate_kv_key";
@@ -8,7 +8,6 @@ const PRIVATE_ID_PREFIX = "PRV";
 const PUBLIC_ID_PREFIX = "PUB";
 const BOOKMARKS_POSTFIX = "BMK";
 
-const PRIVATE_KEY_LEN = 32;
 const SALT_LEN = 16;
 
 const buildPrivateIdKey = (prvId: string) => `${PRIVATE_ID_PREFIX}:${prvId}`;
@@ -43,7 +42,7 @@ const userKv = {
 	addBookmarks: async (prvId: string, ...bookmarkIds: string[]) => {
 		const key = buildBookmarksKey(prvId);
 
-		await kv().sadd(key, bookmarkIds);
+		await kv().sadd(key, ...bookmarkIds);
 	},
 	deleteBookmarks: async (prvId: string, ...bookmarkIds: string[]) => {
 		const key = buildBookmarksKey(prvId);

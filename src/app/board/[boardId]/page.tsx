@@ -1,7 +1,9 @@
 import BoardProvider from "@/features/board/BoardProvider";
 import KanbanBoard from "@/features/board/KanbanBoard";
-import Navbar from "@/features/navbar/Navbar";
+import BookmarksProvider from "@/features/navbar/BookmarksProvider";
+import QuickbanNavbar from "@/features/navbar/QuickbanNavbar";
 import { getBoardSa } from "@/lib/sa/board";
+import { getBookmarksSa } from "@/lib/sa/user";
 
 export default async function BoardPage(props: {
 	params: { boardId: string };
@@ -12,12 +14,18 @@ export default async function BoardPage(props: {
 		boardResponse.status == "success" ? boardResponse.content : undefined;
 	const boardState = board ? { boardId, modified: false, ...board } : null;
 
+	const bookmarksRes = await getBookmarksSa();
+	const bookmarks =
+		bookmarksRes.status === "success" ? bookmarksRes.content : [];
+
 	return (
 		<BoardProvider initialValue={boardState}>
-			<div className="h-dvh flex flex-col">
-				<Navbar position="static" />
-				<KanbanBoard className="min-h-0 flex-1" />
-			</div>
+			<BookmarksProvider initialValue={bookmarks}>
+				<div className="h-dvh flex flex-col">
+					<QuickbanNavbar position="static" />
+					<KanbanBoard className="min-h-0 flex-1" />
+				</div>
+			</BookmarksProvider>
 		</BoardProvider>
 	);
 }
