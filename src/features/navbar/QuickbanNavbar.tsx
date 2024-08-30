@@ -1,4 +1,4 @@
-import { SaveFilled } from "@ant-design/icons";
+import { SaveFilled, UndoOutlined } from "@ant-design/icons";
 import {
 	Navbar,
 	NavbarContent,
@@ -10,6 +10,7 @@ import ThemeSwitcher from "@/components/ThemeSwitcher";
 import { gochiHand } from "@/lib/fonts";
 import BoardTitle from "../board/BoardTitle";
 import SaveBoardModificationsButton from "../board/SaveBoardModificationsButton";
+import UndoBoardModificationsButton from "../board/UndoBoardModificationsButton";
 import QuickbanNavbarMenu from "./QuickbanNavbarMenu";
 
 export type QuickbanNavbarProps = Omit<NextUINavbarProps, "children">;
@@ -33,14 +34,26 @@ export default async function QuickbanNavbar(props: QuickbanNavbarProps) {
 			>
 				<BoardTitle className="text-4xl" />
 			</NavbarContent>
-			<NavbarContent justify="end">
-				<SaveBoardModificationsButton
-					variant="light"
-					size="lg"
-					isIconOnly
-				>
-					<SaveFilled />
-				</SaveBoardModificationsButton>
+			<NavbarContent
+				justify="end"
+				className="gap-8"
+			>
+				<div>
+					<UndoBoardModificationsButton
+						variant="light"
+						size="lg"
+						isIconOnly
+					>
+						<UndoOutlined />
+					</UndoBoardModificationsButton>
+					<SaveBoardModificationsButton
+						variant="light"
+						size="lg"
+						isIconOnly
+					>
+						<SaveFilled />
+					</SaveBoardModificationsButton>
+				</div>
 				<ThemeSwitcher />
 			</NavbarContent>
 			<QuickbanNavbarMenu />

@@ -9,7 +9,11 @@ import GenericMutableProvider, {
 import type BoardSchema from "@/lib/schemas/board";
 
 export type BoardState =
-	| (BoardSchema & { boardId: string; modified: boolean })
+	| (BoardSchema & {
+			boardId: string;
+			modified: boolean;
+			original: BoardSchema;
+	  })
 	| null;
 export type BoardProviderProps = Omit<
 	GenericMutableProviderProps<BoardState>,

@@ -12,7 +12,14 @@ export default async function BoardPage(props: {
 	const boardResponse = await getBoardSa(props.params.boardId);
 	const board =
 		boardResponse.status == "success" ? boardResponse.content : undefined;
-	const boardState = board ? { boardId, modified: false, ...board } : null;
+	const boardState = board
+		? {
+				boardId,
+				modified: false,
+				original: board,
+				...board,
+			}
+		: null;
 
 	const bookmarksRes = await getBookmarksSa();
 	const bookmarks =

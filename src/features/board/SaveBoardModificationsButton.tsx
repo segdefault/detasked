@@ -38,7 +38,14 @@ export default function SaveBoardModificationsButton(
 		}
 
 		if (res && res.status == "success") {
-			setBoardState({ ...boardState, modified: false });
+			setBoardState({
+				...boardState,
+				modified: false,
+				original: {
+					title: boardState.title,
+					columns: structuredClone(boardState.columns),
+				},
+			});
 		} else {
 			toast("Saving failed :/");
 		}

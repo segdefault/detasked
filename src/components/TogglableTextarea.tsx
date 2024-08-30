@@ -26,6 +26,8 @@ export default function TogglableTextarea(props: TogglableTextareaProps) {
 	const className =
 		`${editable ? "cursor-text" : "cursor-pointer"} ` + classNameOverrides;
 
+	React.useEffect(() => setPendingValue(value ?? ""), [value]);
+
 	const enable = () => setEditable(true);
 	const rollback = () => {
 		setPendingValue(value ?? "");
