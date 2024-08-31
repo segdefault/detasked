@@ -70,7 +70,7 @@ export default function KanbanColumn(props: KanbanColumnProps) {
 				column={column}
 				className="p-4"
 			/>
-			<div className="flex-1 overflow-scroll rounded-b-xl bg-slate-300 dark:bg-slate-700">
+			<div className="flex-1 overflow-auto rounded-b-xl bg-slate-300 dark:bg-slate-700">
 				<SortableContext
 					id={column.uuid}
 					items={sortableContextItems}
