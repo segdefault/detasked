@@ -8,14 +8,14 @@ import { updateBoardSa } from "@/lib/sa/board";
 import { deleteBookmarkSa } from "@/lib/sa/user";
 import { useBoard } from "../board/BoardProvider";
 import { useBookmarks } from "./BookmarksProvider";
-import QuickBanBookmarkItem from "./QuickBanBookmarkItem";
+import DetaskedBookmarkItem from "./DetaskedBookmarkItem";
 
-export type QuickbanBookmarkListProps = Omit<
+export type DetaskedBookmarkListProps = Omit<
 	React.HTMLAttributes<HTMLDivElement>,
 	"children"
 >;
 
-export default function QuickbanBookmarkList(props: QuickbanBookmarkListProps) {
+export default function DetaskedBookmarkList(props: DetaskedBookmarkListProps) {
 	const [bookmarks, setBookmarks] = useBookmarks();
 	const [boardState, setBoardState] = useBoard();
 	const router = useRouter();
@@ -92,7 +92,7 @@ export default function QuickbanBookmarkList(props: QuickbanBookmarkListProps) {
 			className={className}
 		>
 			{bookmarks.map((b, i) => (
-				<QuickBanBookmarkItem
+				<DetaskedBookmarkItem
 					key={b.id}
 					boardItem={b}
 					className="h-20 px-4"

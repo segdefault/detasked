@@ -3,11 +3,11 @@ import React from "react";
 import { NavbarMenu, NavbarMenuProps } from "@nextui-org/react";
 
 import NewBookmarkButton from "./NewBookmarkButton";
-import QuickbanBookmarkList from "./QuickbanBookmarkList";
+import DetaskedBookmarkList from "./DetaskedBookmarkList";
 
-export type QuickbanNavbarMenuProps = Omit<NavbarMenuProps, "children">;
+export type DetaskedNavbarMenuProps = Omit<NavbarMenuProps, "children">;
 
-export default function QuickbanNavbarMenu(props: QuickbanNavbarMenuProps) {
+export default function DetaskedNavbarMenu(props: DetaskedNavbarMenuProps) {
 	const { className: classNameOverrides, ...otherProps } = props;
 
 	const className = "flex flex-col w-1/4 p-0" + ` ${classNameOverrides ?? ""}`;
@@ -17,7 +17,7 @@ export default function QuickbanNavbarMenu(props: QuickbanNavbarMenuProps) {
 			className={className}
 			{...otherProps}
 		>
-			<QuickbanBookmarkList className="flex-1 overflow-y-auto min-h-0" />
+			<DetaskedBookmarkList className="flex-1 overflow-y-auto min-h-0" />
 			<NewBookmarkButton />
 		</NavbarMenu>
 	);

@@ -11,11 +11,11 @@ import { gochiHand } from "@/lib/fonts";
 import BoardTitle from "../board/BoardTitle";
 import SaveBoardModificationsButton from "../board/SaveBoardModificationsButton";
 import UndoBoardModificationsButton from "../board/UndoBoardModificationsButton";
-import QuickbanNavbarMenu from "./QuickbanNavbarMenu";
+import DetaskedNavbarMenu from "./DetaskedNavbarMenu";
 
-export type QuickbanNavbarProps = Omit<NextUINavbarProps, "children">;
+export type DetaskedNavbarProps = Omit<NextUINavbarProps, "children">;
 
-export default async function QuickbanNavbar(props: QuickbanNavbarProps) {
+export default async function DetaskedNavbar(props: DetaskedNavbarProps) {
 	const className = `bg-primary dark:bg-slate-800 ${props.className}`;
 
 	return (
@@ -26,7 +26,7 @@ export default async function QuickbanNavbar(props: QuickbanNavbarProps) {
 		>
 			<NavbarContent>
 				<NavbarMenuToggle />
-				<p className={`text-2xl ${gochiHand.className}`}>Quickban</p>
+				<p className={`text-2xl ${gochiHand.className}`}>Detasked</p>
 			</NavbarContent>
 			<NavbarContent
 				className="flex-1"
@@ -56,7 +56,7 @@ export default async function QuickbanNavbar(props: QuickbanNavbarProps) {
 				</div>
 				<ThemeSwitcher />
 			</NavbarContent>
-			<QuickbanNavbarMenu />
+			<DetaskedNavbarMenu />
 		</Navbar>
 	);
 }

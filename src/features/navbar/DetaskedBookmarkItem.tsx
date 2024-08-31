@@ -8,7 +8,7 @@ import TogglableInput from "@/components/TogglableInput";
 import { gochiHand } from "@/lib/fonts";
 import { BoardItemSchema } from "@/lib/schemas/board";
 
-export type QuickbanNavbarMenuItemProps = Omit<
+export type DetaskedNavbarMenuItemProps = Omit<
 	React.HtmlHTMLAttributes<HTMLDivElement>,
 	"children"
 > & {
@@ -18,8 +18,8 @@ export type QuickbanNavbarMenuItemProps = Omit<
 	onDelete?: () => Promise<void>;
 };
 
-export default function QuickBanBookmarkItem(
-	props: QuickbanNavbarMenuItemProps,
+export default function DetaskedBookmarkItem(
+	props: DetaskedNavbarMenuItemProps,
 ) {
 	const {
 		boardItem,
